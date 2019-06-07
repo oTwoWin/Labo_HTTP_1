@@ -4,6 +4,6 @@ COPY src/ /opt/app
 
 WORKDIR /opt/app
 
-RUN nmp install
+RUN npm install
 
 CMD ["node", "/opt/app/index.js"]
