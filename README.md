@@ -9,12 +9,6 @@ Here are the list of the docker images provided by the repo :
 - Static HTTP server with apache httpd (apache-php-image) 
 - Dynamic HTTP server with express.js (express-image)
 - Reverse proxy with apache (static configuration) (reverse-proxy-apache)
-- AJAX requests with JQuery (folder name)
-- Dynamic reverse proxy configuration (folder name)
-
-
-
-Each folder has a README file explaining the steps to run the server and the configuration files.
 
 
 
@@ -172,4 +166,11 @@ Then we just added a `h2` tag with a class containing `animals` which will be th
 
 ## 5. Dynamic reverse proxy configuration
 
-### 
+### Running the server
+
+To run the server, you have to build the image with the Dockerfile located in `docker_images/apache-reverse-proxy` folder. After you built it, you can run the server with the command `docker run -d -e STATIC_APP={IP ADRESS OF YOUR STATIC SERVER} -e DYNAMIC_APP={IP ADRESS OF YOUR DYNAMIC SERVER} --name {NAME OF YOUR CONTAINER} -p 8080:{PORT OF YOUR STATIC SERVER} {NAME OF YOUR IMAGE}`
+
+### Test
+
+We ran multiple containers containing multiple dynamic servers and static servers. After that, we checked their IP addresses and choose one IP address of one dynamic server, and one IP address of one static server. Then, we built the reverse proxy image, ran the command mentioned above with the two IP addresses passed in parameters. Finally, we checked if everything worked fine with our browser, and I yes, everything worked fine.
+
