@@ -4,12 +4,9 @@ var chance = new Chance();
 var express = require('express');
 var app = express();
 
-app.get('/test', function(req, res) {
-   res.send(generateAnimals());
-});
 
 app.get('/', function(req, res) {
-   res.send("Hello RES");
+   res.send(generateAnimals());
 });
 
 
