@@ -130,7 +130,8 @@
   <footer class="bg-black small text-center text-white-50">
     <div class="container">
       Copyright &copy; Mujkanovic Edin and Oliveira Paiva Daniel 2019
-    </div>
+      Server ip: <?php echo $_SERVER['SERVER_ADDR'] ?>
+     </div>
   </footer>
 
   <!-- Bootstrap core JavaScript -->

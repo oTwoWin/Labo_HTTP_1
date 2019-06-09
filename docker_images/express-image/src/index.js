@@ -3,10 +3,12 @@ var chance = new Chance();
 
 var express = require('express');
 var app = express();
-
+var ip = require('ip');
 
 app.get('/', function(req, res) {
-   res.send(generateAnimals());
+   var animals = generateAnimals();
+   var payload = { "Animals" : animals, "Ip address" : ip.address()};
+   res.send(payload);
 });
 
 

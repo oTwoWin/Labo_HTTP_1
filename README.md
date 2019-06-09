@@ -239,3 +239,34 @@ The interface allows you to stop a container, start it, delete it if it is stopp
 
 We did several manipulations (create/stop/start/delete) of the containers from the management tool and we checked that the operations were performed on the host system using the usual Docker commands.
 
+
+
+## 7. Load balancing: multiple server nodes
+
+### Description
+
+This tool provides load balancing for the dynamic reverse proxy server in point 5. 
+
+### Configuration
+
+The script `run-script.sh` launch the server with the ip and port of the static and dynamic servers. It use the name of the static and dynamic server to this purpose.  You need to change the `run-script.sh` file if you need to change the names. 
+
+You have two pools of load balancing, one for static servers and another one for dynamic servers.  If you need to add more, you need to recover the ip and port of the servers first in the `run-script.sh`, edit the ` apache2-foreground` file to add an extra variable and edit the `conf-template.php` to add a pool with the ip addresses and the reverse proxy configuration.
+
+### Building the server image
+
+To run the server, you have to build the image with the Dockerfile located in `docker_images/apache-lb-image` folder.
+
+### Running the server
+
+You have two options :
+
+1. Use the script `run-script.sh` with the name of the image you built previously. The container will be running in the port 80. Launching example `./run-script.sh apache-lb`
+
+2. Recover the ip addresses of the servers manually and launch the docker with the command `docker run -d -e STATIC_APP={IP ADRESSES OF YOUR STATIC SERVER} -e DYNAMIC_APP={IP ADRESSES OF YOUR DYNAMIC SERVER} --name {NAME OF YOUR CONTAINER} -p 80:{PORT OF YOUR SERVER} {NAME OF YOUR IMAGE}  `. The ip must following this structure `ip:port` with a space between each ip.
+
+    
+
+### Tests
+
+We run 3 instance of static and dynamic servers. We checked that the ip addresses change when we reload the page and that all the servers are used. 
