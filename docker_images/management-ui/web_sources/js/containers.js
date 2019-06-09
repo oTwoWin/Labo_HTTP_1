@@ -19,6 +19,7 @@
             message += "<div class=\"h5 mb-0 font-weight-bold text-gray-800\">Image : " + containers[i]["Image"]+"</div>";
             message += "<div class=\"h5 mb-0 font-weight-bold text-gray-800\">ID Container : " + containers[i]["Id"].substr(0,9)+"</div>";
             message += "<div class=\"h5 mb-0 font-weight-bold text-gray-800\">IP : " + containers[i]["NetworkSettings"]["Networks"]["bridge"]["IPAddress"]+"</div>";
+
             if(containers[i]["State"] == "running"){
                 message += '<a href="/stop/?id='+containers[i]["Id"] + '" class="btn btn-warning btn-icon-split">';
                 message += '<span class="icon text-white-50"><i class="fas fa-exclamation-triangle"></i></span></span class="text">Arrêter</span></a>';            

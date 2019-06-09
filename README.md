@@ -8,7 +8,9 @@ Here are the list of the docker images provided by the repo :
 
 - Static HTTP server with apache httpd (apache-php-image) 
 - Dynamic HTTP server with express.js (express-image)
-- Reverse proxy with apache (static configuration) (reverse-proxy-apache)
+- Reverse proxy with apache (static configuration) (apache-reverse-proxy)
+- AJAX requests with JQuery (ajax)
+- Reverse proxy with apache (dynamic configuration) (apache-reverse-proxy-dynamic)
 
 
 
@@ -50,7 +52,7 @@ If you change the port number when you previously launched the docker, don't for
 
 The server is designed to be run in a Docker container.
 
-All the command shown below are executed in this repository.
+All the command shown below are executed in `docker/express-image` repository.
 
 The source for the express server are in the `src` folder if you want to make any change.
 
@@ -119,7 +121,7 @@ To add the domain name `labo.res.ch` (or the domain you specified if you changed
 
 If you are on an UNIX system, modify the file `/etc/hosts`. You have to add this line : 
 
-`127.0.0.1 labo.res.ch` (Replace the domain with your domain). 
+`127.0.0.1 labo.res.ch` (Replace the domain with your domain if you changed it). 
 
 #### Access the server
 
@@ -128,6 +130,20 @@ To access your host, just open your favorite browser and write in the  URL `labo
 If you changed the port number when you previously launched the docker or the domain name in the configuration file, don't forget to change it in the URL too. 
 
 ## 4. AJAX requests with JQuery
+
+#### Building the AJAX apache image
+
+Go to `docker_images/ajax` folder and use the command `docker build -t nameOfYourImage . ` to build it.
+
+#### Running the server
+
+The final step is to run your server. You have to run it with this command: 
+
+`docker run -d namOfYourImage`
+
+Then, you have to run your reverse-proxy server and map the ip adresse of the AJAX apache image with it. Don't forget to map your dynamic HTTP server with express.js.  
+
+Then, you have to access to your proxy-apache server to see it.
 
 ### Implementation
 
@@ -162,13 +178,23 @@ We just imported the script at the bottom of the index.html file with this line 
 
 `<script src="js/animals.js"></script>`
 
-Then we just added a `h2` tag with a class containing `animals` which will be the target of the animal.js script.
+Then we just added a `<h2>` tag with a class containing `animals` which will be the target of the animal.js script.
 
 ## 5. Dynamic reverse proxy configuration
 
+### About the proxy server
+
+This one is the same as the old one but with one difference. This allows you to pass the addresses of the dynamic and static server as parameters.
+
+### Building the server image
+
+To run the server, you have to build the image with the Dockerfile located in `docker_images/apache-reverse-proxy-dynamic` folder. 
+
 ### Running the server
 
-To run the server, you have to build the image with the Dockerfile located in `docker_images/apache-reverse-proxy` folder. After you built it, you can run the server with the command `docker run -d -e STATIC_APP={IP ADRESS OF YOUR STATIC SERVER} -e DYNAMIC_APP={IP ADRESS OF YOUR DYNAMIC SERVER} --name {NAME OF YOUR CONTAINER} -p 8080:{PORT OF YOUR STATIC SERVER} {NAME OF YOUR IMAGE}`
+After you built it, you can run the server with the command `docker run -d -e STATIC_APP={IP ADRESS OF YOUR STATIC SERVER} -e DYNAMIC_APP={IP ADRESS OF YOUR DYNAMIC SERVER} --name {NAME OF YOUR CONTAINER} -p 8080:{PORT OF YOUR STATIC SERVER} {NAME OF YOUR IMAGE}`
+
+Please replace the differents parameter with your configurations.
 
 ### Test
 
@@ -208,3 +234,8 @@ It also provides several features that depend on a URL. Here are the features:
 The client is based on a bootstrap template. It allows to dynamically display boxes for each container running on the machine. It retrieves the information via a JavaScript script that accesses the URL of the server `/getContainers`. It also provides a form whose available images are retrieved from the nodejs server via the url `/getImages`.
 
 The interface allows you to stop a container, start it, delete it if it is stopped. It allows you to create a container according to a name, an image and options.
+
+### Tests
+
+We did several manipulations (create/stop/start/delete) of the containers from the management tool and we checked that the operations were performed on the host system using the usual Docker commands.
+
