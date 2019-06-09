@@ -188,7 +188,9 @@ This one is the same as the old one but with one difference. This allows you to 
 
 ### Building the server image
 
-To run the server, you have to build the image with the Dockerfile located in `docker_images/apache-reverse-proxy-dynamic` folder. 
+To run the server, you have to build the image with the Dockerfile located in `docker_images/apache-reverse-proxy-dynamic` folder. Run this command : 
+
+`docker build -t nameOfYourImage . `
 
 ### Running the server
 
@@ -206,12 +208,33 @@ We ran multiple containers containing multiple dynamic servers and static server
 
 ### Description
 
-This tool provides a web interface that allows you to manage the different containers on the PC. It uses a nodejs server and the Dockerode library. 
+This tool provides a web interface that allows you to manage the different containers on the PC. It uses a nodejs server and the Dockerode library.  The tool is running in a Docker.
+
+### Building the image
+
+To build the image, go to `docker_images/management-ui` folder and run the following command: 
+
+`docker build -t nameOfYourImage . `
 
 ### Starting the management tool
 
-To launch the interface, simply go to the `docker_images/management-ui/src` folder and type the command `node index.js`. Then you can access it via the URL : `127.0.0.1:2000`.
-It is important to make sure that you have the right packages installed on your machine. 
+To start the tool, simply type this command : 
+
+`docker run -d -v /var/run/docker.sock:/var/run/docker.sock -p 11111:2000 nameOfYourImage`
+
+In this example, we want to redirect the 11111 port to the container containing the management tool. You can change it if you want. By default, the management tool is running on the port 2000, you can modify this port in the last lines of index.js file by modifying this line : 
+
+```javascript
+app.listen(2000, function(){ //<--- LINE TO MODIFY
+   console.log('Accepting HTTP requests on port 2000.');
+});
+```
+
+
+
+ The argument `-v /var/run/docker.sock:/var/run/docker.sock` is to pass the local Docker socket to the container. If your Docker socket is located in another place, please change it. 
+
+After you started the container, you can access the tool with a browser by accessing the URL : localhost:11111 (or your port if you changed it).
 
 ### Implementation
 
