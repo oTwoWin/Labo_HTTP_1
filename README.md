@@ -293,3 +293,23 @@ You have two options :
 ### Tests
 
 We run 3 instance of static and dynamic servers. We checked that the ip addresses change when we reload the page and that all the servers are used. 
+
+
+
+## 8. Load balancing: round-robin vs sticky sessions
+
+### Description
+
+We added the sticky sessions for the static servers. The server is the same as in the previous point excepted on file that is edited.
+
+### Configuration
+
+The file in `template/config-template.php` contains the configuration for the sticky sessions. We added route numbers to each host and added a cookie to the response if it's not set yet.
+
+### Building and running the server
+
+See the paragraphs in point 7.
+
+### Tests
+
+We tested that the server is always the same with the sticky session and that dynamic server is always balanced as previously.  
