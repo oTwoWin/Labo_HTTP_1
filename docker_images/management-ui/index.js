@@ -2,7 +2,7 @@ var express = require('express');
 var app = express();
 var Docker = require('dockerode');
 var docker = new Docker({socketPath: '/var/run/docker.sock'});
-app.use(express.static("../web_sources"));
+app.use(express.static("./web_sources"));
 
 
 global.currentContainers=[];
