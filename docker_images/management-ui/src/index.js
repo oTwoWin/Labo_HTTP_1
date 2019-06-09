@@ -33,8 +33,8 @@ app.get('/stop', function(req,res){
 });
 
 app.get('/start', function(req,res){
-        docker.getContainer(req.query.name).start(function (err, data) {
-            console.log(data);
+        docker.getContainer(req.query.id).start(function (err, data) {
+            console.log(req.query.id);
         });
 });
 

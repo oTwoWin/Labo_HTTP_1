@@ -105,7 +105,7 @@ If you want to change the different server, you will have to modify the `ProxyPa
 
 #### Building the apache image
 
-Use the command `docker build -t nameOfYourImage .` to build the image.
+Go to `docker_images/apache-reverse-proxy` folder and use the command `docker build -t nameOfYourImage .` to build the image.
 
 #### Running the server
 
@@ -174,3 +174,37 @@ To run the server, you have to build the image with the Dockerfile located in `d
 
 We ran multiple containers containing multiple dynamic servers and static servers. After that, we checked their IP addresses and choose one IP address of one dynamic server, and one IP address of one static server. Then, we built the reverse proxy image, ran the command mentioned above with the two IP addresses passed in parameters. Finally, we checked if everything worked fine with our browser, and I yes, everything worked fine.
 
+
+
+## 6. Management UI
+
+### Description
+
+This tool provides a web interface that allows you to manage the different containers on the PC. It uses a nodejs server and the Dockerode library. 
+
+### Starting the management tool
+
+To launch the interface, simply go to the `docker_images/management-ui/src` folder and type the command `node index.js`. Then you can access it via the URL : `127.0.0.1:2000`.
+It is important to make sure that you have the right packages installed on your machine. 
+
+### Implementation
+
+#### Server side
+
+The server runs on nodejs and uses the Dockerode library.
+When the server starts, it will retrieve all the containers running on the host machine. It will also retrieve all available Docker images from the host machine. It will launch these two functions every second. 
+
+It will also provide two URLs that allow a customer to retrieve the images as well as the containers that are launched. These two URLs are /getContainers and /getImages.
+
+It also provides several features that depend on a URL. Here are the features: 
+- /create: allows you to create a container using the data sent from a client. It will retrieve the name of the container to be created, the desired image and the options. These are passed in the URL. He will retrieve the information and create the container.
+- /stopAll: allows you to stop all containers. 
+- /stop: allows to stop a container thanks to its id which is passed in the URL.
+- /start: allows you to start a container according to the name of the container to be started which is passed in the URL as a parameter.
+- /delete : allows you to delete a container according to the name of the container to be deleted that is passed in the URL as a parameter.
+
+#### Client side
+
+The client is based on a bootstrap template. It allows to dynamically display boxes for each container running on the machine. It retrieves the information via a JavaScript script that accesses the URL of the server `/getContainers`. It also provides a form whose available images are retrieved from the nodejs server via the url `/getImages`.
+
+The interface allows you to stop a container, start it, delete it if it is stopped. It allows you to create a container according to a name, an image and options.
