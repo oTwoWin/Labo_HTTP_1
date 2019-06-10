@@ -11,6 +11,8 @@ Here are the list of the docker images provided by the repo :
 - Reverse proxy with apache (static configuration) (apache-reverse-proxy)
 - AJAX requests with JQuery (ajax)
 - Reverse proxy with apache (dynamic configuration) (apache-reverse-proxy-dynamic)
+- Reverse proxy with apache and Load Balancing (apache-lb-image)
+- Reverse proxy with apache and Load Balancing with sticky sessions (apache-lb-sticky-image)
 
 
 
