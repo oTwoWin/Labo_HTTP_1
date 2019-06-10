@@ -5,8 +5,8 @@ $(function(){
 		$.getJSON("/api/animals/", function( animals ){
 		console.log(animals);
 		var message = "No animals";
-		if ( animals.length > 0 ){
-			message = animals[0].name + " the " + animals[0].type;
+		if ( animals.Animals.length > 0 ){
+			message = animals.Animals[0].name + " the " + animals.Animals[0].type;
 		}
 		$(".animals").text(message);
 	});

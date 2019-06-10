@@ -15,6 +15,7 @@ app.get('/', function(req,res){
 
 app.get('/create', function(req,res){
     const { exec } = require('child_process');
+    console.log(exec);
 
     cmd = 'docker run -d ' +  req.query.options + ' --name ' + req.query.name + ' ' + req.query.imagename;
     exec(cmd);     
@@ -45,9 +46,11 @@ app.get('/delete', function(req,res){
 function updateContainers(){
     currentContainers=[];
     docker.listContainers({ all: true },function (err, containers) {
-      containers.forEach(function (containerInfo) {
+      
+        containers.forEach(function (containerInfo) {
         currentContainers.push(containerInfo);
       });
+      
     });
     //console.log(currentContainers);
 }
@@ -55,11 +58,13 @@ function updateContainers(){
 function updateImages(){
     currentImages=[];
     docker.listImages({ all: true },function (err, containers) {
-      containers.forEach(function (containerInfo) {
+       
+        containers.forEach(function (containerInfo) {
         //console.log(containerInfo);
         currentImages.push(containerInfo);
         //console.log(listImages.Id);
       });
+      
     });
     console.log(currentImages);
 }
