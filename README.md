@@ -210,19 +210,13 @@ We ran multiple containers containing multiple dynamic servers and static server
 
 This tool provides a web interface that allows you to manage the different containers on the PC. It uses a nodejs server and the Dockerode library.  The tool is running in a Docker.
 
-### Building the image
-
-To build the image, go to `docker_images/management-ui` folder and run the following command: 
-
-`docker build -t nameOfYourImage . `
-
 ### Starting the management tool
 
-To start the tool, simply type this command : 
+To start the tool, simply go in `docker_images/mangement-ui` folder and type this command : 
 
-`docker run -d -v /var/run/docker.sock:/var/run/docker.sock -p 11111:2000 nameOfYourImage`
+`node index.js`
 
-In this example, we want to redirect the 11111 port to the container containing the management tool. You can change it if you want. By default, the management tool is running on the port 2000, you can modify this port in the last lines of index.js file by modifying this line : 
+By default, the management tool is running on the port 2000, you can modify this port in the last lines of index.js file by modifying this line : 
 
 ```javascript
 app.listen(2000, function(){ //<--- LINE TO MODIFY
@@ -230,11 +224,7 @@ app.listen(2000, function(){ //<--- LINE TO MODIFY
 });
 ```
 
-
-
- The argument `-v /var/run/docker.sock:/var/run/docker.sock` is to pass the local Docker socket to the container. If your Docker socket is located in another place, please change it. 
-
-After you started the container, you can access the tool with a browser by accessing the URL : localhost:11111 (or your port if you changed it).
+After you started the application, you can access the tool with a browser by accessing the URL : localhost:2000 (or your port if you changed it).
 
 ### Implementation
 
